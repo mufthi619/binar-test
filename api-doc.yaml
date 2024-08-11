@@ -1,0 +1,750 @@
+openapi: 3.0.0
+info:
+  title: Binar - Backend Developer Home Assignment Test
+  version: 1.0.0
+  description: API For Binar Technical Test
+
+servers:
+  - url: http://localhost:8005
+    description: Local development server
+
+paths:
+  /api/users:
+    post:
+      summary: Create a new user
+      description: Register a new user in the system
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable - username already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/users/{id}:
+    get:
+      summary: Get user information
+      description: Retrieve user information by ID
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailResponse'
+        '400':
+          description: Bad request - Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/notifications:
+    post:
+      summary: Create a new notification
+      description: Send a notification to a user
+      tags:
+        - Notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNotificationRequest'
+      responses:
+        '201':
+          description: Notification created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResponse'
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable - user not registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/notifications/{id}:
+    get:
+      summary: Get notifications for a user
+      description: Retrieve notifications for a specific user ID
+      tags:
+        - Notification
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationListResponse'
+        '400':
+          description: Bad request - Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/notifications/broadcast:
+    post:
+      summary: Broadcast a notification to all users
+      description: Send a notification to all registered users
+      tags:
+        - Notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BroadcastNotificationRequest'
+      responses:
+        '201':
+          description: Notification broadcast job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BroadcastNotificationResponse'
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable - system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/conversations:
+    post:
+      summary: Create a new conversation
+      description: Create a new conversation between participants
+      tags:
+        - Conversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConversationRequest'
+      responses:
+        '201':
+          description: Conversation created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationResponse'
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/conversations/{id}:
+    get:
+      summary: Get conversation details
+      description: Retrieve details of a specific conversation
+      tags:
+        - Conversation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Conversation ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationResponse'
+        '400':
+          description: Bad request - invalid conversation ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable - conversation not found or system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/conversations/{id}/messages:
+    get:
+      summary: Get messages in a conversation
+      description: Retrieve all messages from a specific conversation
+      tags:
+        - Message
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Conversation ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResponse'
+        '400':
+          description: Bad request - invalid conversation ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new message in a conversation
+      description: Add a new message to a specific conversation
+      tags:
+        - Message
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Conversation ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMessageRequest'
+      responses:
+        '201':
+          description: Message created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Bad request - invalid body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable - conversation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/jobs/{id}:
+    get:
+      summary: Get job status
+      description: Retrieve the status of a specific job
+      tags:
+        - Job
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Job ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatusResponse'
+        '400':
+          description: Bad request - Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Job not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/files/upload:
+    post:
+      summary: Upload a file
+      description: Upload a file associated with a user
+      tags:
+        - File
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: "1"
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/files/{id}:
+    get:
+      summary: Get file information
+      description: Retrieve information about a specific file
+      tags:
+        - File
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: File ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+        '400':
+          description: Bad request - Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          example: gojodstoru
+        email:
+          type: string
+          format: email
+          example: goatjosatoru@gmail.com
+        password:
+          type: string
+          format: password
+          example: strongestsorcerer
+
+    UserResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            username:
+              type: string
+              example: gojodstoru
+            email:
+              type: string
+              example: goatjosatoru@gmail.com
+
+    UserDetailResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            username:
+              type: string
+              example: gojodstoru
+            email:
+              type: string
+              example: goatjosatoru@gmail.com
+            created_at:
+              type: string
+              format: date-time
+              example: "2024-08-11T15:00:00.000Z"
+
+    CreateNotificationRequest:
+      type: object
+      required:
+        - user_id
+        - message
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        message:
+          type: string
+          example: "Are you strongest because you're gojo satoru or you are gojo satoru because you're strongest?"
+
+    NotificationResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            user_id:
+              type: integer
+              example: 1
+            message:
+              type: string
+              example: "Are you strongest because you're gojo satoru or you are gojo satoru because you're strongest?"
+            created_at:
+              type: string
+              format: date-time
+              example: "2024-08-11T15:30:00.000Z"
+
+    NotificationListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              user_id:
+                type: integer
+                example: 1
+              message:
+                type: string
+                example: "Are you strongest because you're gojo satoru or you are gojo satoru because you're strongest?"
+              created_at:
+                type: string
+                format: date-time
+                example: "2024-08-11T15:30:00.000Z"
+
+    CreateConversationRequest:
+      type: object
+      required:
+        - participants
+      properties:
+        participants:
+          type: array
+          items:
+            type: integer
+          minItems: 2
+          example: [1, 2]
+
+    ConversationResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 2
+            participants:
+              type: array
+              items:
+                type: integer
+              example: [1, 2]
+            created_at:
+              type: string
+              format: date-time
+              example: "2024-08-11T15:18:25.89776+08:00"
+
+    CreateMessageRequest:
+      type: object
+      required:
+        - sender_id
+        - content
+      properties:
+        sender_id:
+          type: integer
+          example: 1
+        content:
+          type: string
+          example: "Satoru?"
+
+    MessageResponse:
+        type: object
+        properties:
+          code:
+            type: integer
+            example: 201
+          message:
+            type: string
+            example: "Successfully"
+          data:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              conversation_id:
+                type: integer
+                example: 1
+              sender_id:
+                type: integer
+                example: 1
+              content:
+                type: string
+                example: "Satoru?"
+              sent_at:
+                type: string
+                format: date-time
+                example: "0001-01-01T00:00:00Z"
+
+    MessageListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+
+    Message:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          conversation_id:
+            type: integer
+            example: 1
+          sender_id:
+            type: integer
+            example: 1
+          content:
+            type: string
+            example: "Satoru?"
+          sent_at:
+            type: string
+            format: date-time
+            example: "0001-01-01T07:57:36+07:57"
+
+    FileUploadResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: "Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 4
+            user_id:
+              type: integer
+              example: 1
+            file_url:
+              type: string
+              example: "http://localhost:8005/uploads/1_1723378194933152000.png"
+            uploaded_at:
+              type: string
+              format: date-time
+              example: "2024-08-11T20:09:54.933904+08:00"
+    FileInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 1
+        file_url:
+          type: string
+          example: "clean_arc.png"
+        uploaded_at:
+          type: string
+          format: date-time
+          example: "2024-08-11T17:12:48.904633+08:00"
+
+    BroadcastNotificationRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: "System maintenance at 2 AM."
+
+    BroadcastNotificationResponse:
+        type: object
+        properties:
+          code:
+            type: integer
+            example: 201
+          message:
+            type: string
+            example: "Successfully"
+          data:
+            type: object
+            properties:
+              job_id:
+                type: integer
+                example: 1
+              status:
+                type: string
+                example: "queued"
+              queued_at:
+                type: string
+                format: date-time
+                example: "2024-08-11T21:11:02.763783+08:00"
+
+    JobStatusResponse:
+        type: object
+        properties:
+          code:
+            type: integer
+            example: 200
+          message:
+            type: string
+            example: "Successfully"
+          data:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              status:
+                type: string
+                enum: [ queued, in_progress, completed, failed ]
+                example: "queued"
+              queued_at:
+                type: string
+                format: date-time
+                example: "2024-08-11T21:11:02.763783Z"
+              message:
+                type: string
+                example: "System maintenance at 2 AM."
+              completed_at:
+                type: string
+                format: date-time
+                nullable: true
+                example: null
+              error:
+                type: string
+                nullable: true
+                example: null
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "Validation error"

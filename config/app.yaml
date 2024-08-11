@@ -1,0 +1,23 @@
+app_config:
+  app_name: "technical-test"
+  port: 8005
+  debug_mode: true
+  url: "http://localhost"
+  public_dir: "uploads"
+
+database_config:
+  host: "localhost"
+  port: 5432
+  user: "technical_test"
+  password: "Technical!"
+  database: "technical_test"
+  usage_sql: "pgsql"
+  max_idle_conn: 10
+  max_open_conn: 100
+  max_life_time_conn: 3600
+
+rabbit_config:
+  user: "technical_test"
+  password: "Technical!"
+  host: "localhost"
+  port: 5672
