@@ -1,6 +1,8 @@
 package di
 
 import (
+	domain5 "binar/internal/app/article/category/domain"
+	repository4 "binar/internal/app/article/category/repository"
 	domain3 "binar/internal/app/conversation/domain"
 	"binar/internal/app/conversation/repository/conversation"
 	"binar/internal/app/conversation/repository/message"
@@ -20,6 +22,7 @@ var RepositorySet = wire.NewSet(
 	conversation.NewConversationRepository,
 	message.NewMessageRepository,
 	repository3.NewFileRepository,
+	repository4.NewCategoryRepository,
 	ProvideRepository,
 )
 
@@ -29,6 +32,7 @@ func ProvideRepository(
 	conversationRepository domain3.ConversationRepository,
 	messageRepository domain3.MessageRepository,
 	fileRepository domain4.FileRepository,
+	categoryRepository domain5.CategoryRepository,
 ) infra.Repository {
 	return infra.Repository{
 		UserRepository:         userRepo,
@@ -36,5 +40,6 @@ func ProvideRepository(
 		ConversationRepository: conversationRepository,
 		MessageRepository:      messageRepository,
 		FileRepository:         fileRepository,
+		CategoryRepository:     categoryRepository,
 	}
 }

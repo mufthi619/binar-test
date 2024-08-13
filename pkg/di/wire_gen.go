@@ -7,6 +7,9 @@
 package di
 
 import (
+	http5 "binar/internal/app/article/category/delivery/http"
+	repository4 "binar/internal/app/article/category/repository"
+	service6 "binar/internal/app/article/category/service"
 	http3 "binar/internal/app/conversation/delivery/http"
 	"binar/internal/app/conversation/repository/conversation"
 	"binar/internal/app/conversation/repository/message"
@@ -54,13 +57,16 @@ func InitializeApp(cfg *config.Config) (*infra.Infra, error) {
 	fileRepository := repository3.NewFileRepository(databases, zapLogger)
 	appConfig := ProvideAppConfig(cfg)
 	fileService := service5.NewFileService(fileRepository, userRepository, databases, appConfig, zapLogger)
-	infraService := ProvideService(userService, notificationService, conversationService, messageService, fileService)
-	infraRepository := ProvideRepository(userRepository, notificationRepository, conversationRepository, messageRepository, fileRepository)
+	categoryRepository := repository4.NewCategoryRepository(databases, zapLogger)
+	categoryService := service6.NewCategoryService(categoryRepository, databases, zapLogger)
+	infraService := ProvideService(userService, notificationService, conversationService, messageService, fileService, categoryService)
+	infraRepository := ProvideRepository(userRepository, notificationRepository, conversationRepository, messageRepository, fileRepository, categoryRepository)
 	userHandler := http.NewUserHandler(userService)
 	notificationHandler := http2.NewNotificationHandler(notificationService)
 	conversationHandler := http3.NewConversationHandler(messageService, conversationService)
 	fileHandler := http4.NewFileHandler(fileService)
-	handler := ProvideHandler(userHandler, notificationHandler, conversationHandler, fileHandler)
+	categoryHandler := http5.NewCategoryHandler(categoryService)
+	handler := ProvideHandler(userHandler, notificationHandler, conversationHandler, fileHandler, categoryHandler)
 	infraInfra := &infra.Infra{
 		Config:       cfg,
 		Databases:    databases,

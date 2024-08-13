@@ -142,3 +142,160 @@ Follow these steps carefully to set up and run the application:
 # Lack
 - Import Naming: The project uses GoLand's default auto-import feature, which may result in numerically suffixed package aliases (e.g., domain1, domain2).
 - Unit Tests: Due to time constraints, comprehensive unit tests are not included in the current version.
+
+# Other
+
+### Article Detail
+
+```json
+{
+   "id": 1,
+   "title": "Hari Pendidikan Internasional 2023: Tema dan Sejarah Peringatan",
+   "creator": {
+      "creator_id": 1,
+      "created_by_name": "Admin Sekolah"
+   },
+   "created_at": "YYYY-MM-DD hh:mm:ss",
+   "article_image" : ["https://kilua.png"],
+   "article_content": "Lorem Ipsum",
+   "available_emoticons" : [
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Marah",
+         "emoticon_count" : 2
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Kaget",
+         "emoticon_count" : 2
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Sedih",
+         "emoticon_count" : 2
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Takut",
+         "emoticon_count" : 1
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Lucu",
+         "emoticon_count" : 2
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Senang",
+         "emoticon_count" : 2
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Suka",
+         "emoticon_count" : 2
+      },
+      {
+         "emoticon_id" : 1,
+         "emoticon_image_url" : "https://gojosatoru.png",
+         "emoticon_name" : "Terinspirasi",
+         "emoticon_count" : 1
+      }
+   ],
+   "comments": [
+      {
+         "user_detail": {
+            "user_id" : 1,
+            "name" : "Amy Schneider"
+         },
+         "created_at": "YYYY-MM-DD hh:mm:ss",
+         "comment" : "Lorem Ipsum"
+      },
+      {
+         "user_detail": {
+            "user_id" : 2,
+            "name" : "Carlos Wilkins"
+         },
+         "created_at": "YYYY-MM-DD hh:mm:ss",
+         "comment" : "Lorem Ipsum"
+      },
+      {
+         "user_detail": {
+            "user_id" : 2,
+            "name" : "Carlos Wilkins"
+         },
+         "created_at": "YYYY-MM-DD hh:mm:ss",
+         "comment" : "Lorem Ipsum"
+      }
+   ]
+}
+```
+
+### Article List
+
+```json
+{
+   "article_category" : [
+      {
+         "id" : 1,
+         "name" : "ENTERTAINMENT"
+      },
+      {
+         "id" : 2,
+         "name" : "SMA SKUL ID"
+      },
+      {
+         "id" : 3,
+         "name" : "SMP NEGERI 30"
+      }
+   ]
+}
+```
+
+```json
+{
+   "article_category_id" : 2,
+   "top_content" : [
+      {
+         "article_id" : 1,
+         "article_image" : ["https://kilua.png"],
+         "article_title" : "Hari Pendidikan Internasional 2023: Tema dan Sejarah Peringatan",
+         "like_count" : 50,
+         "comment_count" : 10,
+         "created_at" : "YYYY-MM-DD hh:mm:ss"
+      }
+   ],
+   "other_content" : [
+      {
+         "article_id" : 2,
+         "article_image" : ["https://kilua.png"],
+         "article_title" : "Pameran pendidikan Study in UKExpo 2023 akan hadirkan 23...",
+         "like_count" : 50,
+         "comment_count" : 10,
+         "created_at" : "YYYY-MM-DD hh:mm:ss"
+      },
+      {
+         "article_id" : 3,
+         "article_image" : ["https://kilua.png"],
+         "article_title" : "Teknologi Digital Jembatan Emas Pendidikan?",
+         "like_count" : 50,
+         "comment_count" : 10,
+         "created_at" : "YYYY-MM-DD hh:mm:ss"
+      },
+      {
+         "article_id" : 2,
+         "article_image" : ["https://kilua.png"],
+         "article_title" : "Tantang Pendidikan di EraPandemi",
+         "like_count" : 50,
+         "comment_count" : 10,
+         "created_at" : "YYYY-MM-DD hh:mm:ss"
+      }
+   ]
+}
+```

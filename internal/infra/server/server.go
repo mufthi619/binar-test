@@ -72,6 +72,9 @@ func (s *Server) setupRoutes() {
 	//Job
 	api.GET("/jobs/:id", s.app.Handler.NotificationHandler.GetJobStatus)
 
+	//Category
+	api.GET("/category", s.app.Handler.CategoryHandler.GetAll)
+
 }
 
 func (s *Server) Start() error {

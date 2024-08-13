@@ -1,6 +1,8 @@
 package di
 
 import (
+	domain5 "binar/internal/app/article/category/domain"
+	service5 "binar/internal/app/article/category/service"
 	domain3 "binar/internal/app/conversation/domain"
 	service3 "binar/internal/app/conversation/service"
 	domain4 "binar/internal/app/files/domain"
@@ -20,6 +22,7 @@ var ServiceSet = wire.NewSet(
 	service3.NewConversationService,
 	service3.NewMessageService,
 	service4.NewFileService,
+	service5.NewCategoryService,
 	ProvideService,
 	queueService.NewQueueService,
 )
@@ -30,6 +33,7 @@ func ProvideService(
 	conversationService domain3.ConversationService,
 	messageService domain3.MessageService,
 	fileService domain4.FileService,
+	categoryService domain5.CategoryService,
 ) infra.Service {
 	return infra.Service{
 		UserService:         userService,
@@ -37,5 +41,6 @@ func ProvideService(
 		ConversationService: conversationService,
 		MessageService:      messageService,
 		FileService:         fileService,
+		CategoryService:     categoryService,
 	}
 }

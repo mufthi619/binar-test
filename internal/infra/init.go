@@ -1,6 +1,8 @@
 package infra
 
 import (
+	http5 "binar/internal/app/article/category/delivery/http"
+	domain5 "binar/internal/app/article/category/domain"
 	http3 "binar/internal/app/conversation/delivery/http"
 	domain3 "binar/internal/app/conversation/domain"
 	http4 "binar/internal/app/files/delivery/http"
@@ -33,6 +35,7 @@ type Service struct {
 	ConversationService domain3.ConversationService
 	MessageService      domain3.MessageService
 	FileService         domain4.FileService
+	CategoryService     domain5.CategoryService
 }
 
 type Repository struct {
@@ -41,6 +44,7 @@ type Repository struct {
 	ConversationRepository domain3.ConversationRepository
 	MessageRepository      domain3.MessageRepository
 	FileRepository         domain4.FileRepository
+	CategoryRepository     domain5.CategoryRepository
 }
 
 type Handler struct {
@@ -48,4 +52,5 @@ type Handler struct {
 	NotificationHandler http2.NotificationHandler
 	ConversationHandler http3.ConversationHandler
 	FileHandler         http4.FileHandler
+	CategoryHandler     http5.CategoryHandler
 }
